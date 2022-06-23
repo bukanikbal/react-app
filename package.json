@@ -1,0 +1,60 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.6.4",
+    "@reduxjs/toolkit": "^1.8.0",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "apollo3-cache-persist": "^0.14.0",
+    "axios": "^0.26.1",
+    "bson": "^4.6.3",
+    "buffer": "^6.0.3",
+    "firebase": "^9.8.3",
+    "googleapis": "^97.0.0",
+    "graphql": "^16.5.0",
+    "image-validator": "^1.2.1",
+    "materialize-css": "^1.0.0",
+    "mobx": "^6.5.0",
+    "mobx-react": "^7.4.0",
+    "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "recoil": "^0.7.3-alpha.2",
+    "recoil-persist": "^4.1.0",
+    "recoilize": "^3.1.6",
+    "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.4.1",
+    "styled-components": "^5.3.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

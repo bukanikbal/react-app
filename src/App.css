@@ -1,0 +1,66 @@
+
+.row{
+	margin-bottom: 0
+}
+.collection,.progress{
+  margin-top:0;
+  margin-bottom: 0
+}
+.collection-item.avatar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center
+}
+.modal-content,.modal-footer{
+  padding:0;
+}
+.form-message{
+	border: 1px solid black;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1
+}
+.row.row-form{
+	display: flex;
+}
+.row.row-message{
+  border:1px solid red;
+  max-height: calc(100vh - 133px);
+  overflow: auto;
+  z-index: -1
+}
+.form-input{
+	display: flex;
+	justify-content: center
+}
+.form-button{
+	display: flex;
+	justify-content: center
+}
+.container-message{
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+.btn-file{
+  position: relative;
+}
+.file-select{
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  opacity: 0
+}
+.form-caption{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0
+}
+.card-title.img-title{
+  right: 0
+}
