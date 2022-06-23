@@ -10,11 +10,11 @@ function List({message}){
   var {sender,receiver} = message
 
   var [imagePath,setImagesPath] = useState(
-    'http://192.168.43.225:5000/images'
+    process.env.REACT_SERVER_ADDRESS
   )
 
   function getImage({profile}){
-    return `${imagePath}/${profile.picture}`
+    return `${imagePath}/images/${profile.picture}`
   }
 
   if(message.sender._id == reactive().user._id){

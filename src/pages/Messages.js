@@ -13,11 +13,11 @@ import {ObjectId} from "bson"
 
 function Header({info}){
 	var [imagePath] = useState(
-    'http://localhost:5000/images'
+    process.env.REACT_SERVER_ADDRESS
   )
 
   function getImage({picture}){
-    return `${imagePath}/${picture}`
+    return `${imagePath}/images/${picture}`
   }
 
 
