@@ -2,6 +2,10 @@
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
+   "engines": {
+    "node": "15.5.1",
+    "npm": "7.3.0"
+  },
   "dependencies": {
     "@apollo/client": "^3.6.4",
     "@reduxjs/toolkit": "^1.8.0",
