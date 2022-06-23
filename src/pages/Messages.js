@@ -285,7 +285,7 @@ function SendTxt({setTextValue,error}){
     <div className="col l11 valign-wrapper">
 			<textarea 
 				className="materialize-textarea white-text"
-        placeholder={error ? error ? "new message"}
+        placeholder={error ? error : "new message"}
         onChange={({target}) => onChange(target)}
 				style={{
 				  marginBottom:'0',
