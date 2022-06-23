@@ -263,9 +263,9 @@ function SendFile({run,info,setMessages}){
           uploading...
         </p>
       )}
-       {error && (
+      {err && (
         <p className="white-text">
-          {error.message}
+          {err.message}
         </p>
       )}
     </div>
