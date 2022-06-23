@@ -260,14 +260,19 @@ function SendFile({run,info,setMessages}){
       )}
       {pending && (
         <p className="white-text">
-          iploading...
+          uploading...
+        </p>
+      )}
+       {error && (
+        <p className="white-text">
+          {error.message}
         </p>
       )}
     </div>
   )
 }
 
-function SendTxt({setTextValue}){
+function SendTxt({setTextValue,error}){
 
   function onChange({value}){
     setTextValue((currentValue) => {
@@ -280,8 +285,8 @@ function SendTxt({setTextValue}){
     <div className="col l11 valign-wrapper">
 			<textarea 
 				className="materialize-textarea white-text"
+        placeholder={error ? error ? "new message"}
         onChange={({target}) => onChange(target)}
-				placeholder="new message"
 				style={{
 				  marginBottom:'0',
 					boxShadow:'none',
@@ -368,6 +373,9 @@ function Send({setMessages,info}){
           setTextValue = {
             setTextValue
           }
+          error = {
+            error
+          }
         />
         <SendFile
           info = {
@@ -401,7 +409,7 @@ function Messages({user,state}){
   )
 
   var [socketIo] = useSocketIo(
-    'http://192.168.43.225:5000',
+    process.env.REACT_APP_SERVER_ADDRESS,
     createUniqueId(
       user._id,
       state.info._id
