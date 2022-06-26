@@ -6,7 +6,7 @@ import {useQuery,useMutation} from '@apollo/client'
 import {reactive} from '../reactive'
 import {useSocketIo} from '../custom_hooks/useSocketIo'
 import {useUpload} from '../firebase/firebase-hooks'
-import {MessagesQuery,newQuery} from '../graphql/query'
+import {MessagesQuery,newQuery,updateQuery} from '../graphql/query'
 import {Preloader} from '../components/Preloader'
 import {ObjectId} from "bson"
 
@@ -45,10 +45,10 @@ function List({_id,message}){
       <div className="col s12 white-text">
         <div className="row">
           <div className={send ? "col s6" : "col s6 offset-s6"}>
-            <div className={send ? "card-panel teal" : "card-panel red"}>
+            <div className={send ? "card-panel black" : "card-panel red"}>
               <span>{message.content.value}</span>
             
-              {send && message.send && (
+              {send && message.send && !message.read && (
                 <a href="#!" class="secondary-content white-text">
                   <i class="material-icons">
                     done_all
@@ -60,6 +60,14 @@ function List({_id,message}){
                 <a href="#!" class="secondary-content white-text">
                   <i class="material-icons">
                     done
+                  </i>
+                </a>
+              )}
+
+              {send && message.read && (
+                <a href="#!" class="secondary-content blue-text">
+                  <i class="material-icons">
+                    done_all
                   </i>
                 </a>
               )}
@@ -285,7 +293,7 @@ function SendTxt({setTextValue,error}){
     <div className="col l11 valign-wrapper">
 			<textarea 
 				className="materialize-textarea white-text"
-        placeholder={error ? error : "new message"}
+        placeholder={error ? error.message : "new message"}
         onChange={({target}) => onChange(target)}
 				style={{
 				  marginBottom:'0',
@@ -310,18 +318,6 @@ function Send({setMessages,info}){
     newQuery
   )
 
-  function send(Param,content){
-    var param = {
-      ...Param,
-      ...info,
-      content,
-    }
-    
-    console.log(
-      param
-    )
-  }
-
   function send(event){
     var __id = new ObjectId()
     var _id = __id.toString()
@@ -335,10 +331,15 @@ function Send({setMessages,info}){
       type:'txt'
     }
 
-    var param = {
+    var messageParam = {
       ...info,
+      read:false,
       content,
       _id
+    }
+
+    var param = {
+      ...messageParam
     }
 
     var variables = {
@@ -404,16 +405,18 @@ function Messages({user,state}){
   	)
   })
 
+  var [run,{loading,error,data}] = useMutation(
+    updateQuery
+  )
+
   var [messages,setMessages] = useState(
     null
   )
 
   var [socketIo] = useSocketIo(
-    process.env.REACT_APP_SERVER_ADDRESS,
-    createUniqueId(
-      user._id,
-      state.info._id
-    )
+    process.env.REACT_APP_SERVER_ADDRESS,[
+      sendInfo.uniqueId,user._id
+    ]
   )
 
   function strToArray(param,limiter){
@@ -458,6 +461,30 @@ function Messages({user,state}){
 	}
 
   function onMessage(message){
+    var update = {
+      read:true
+    }
+
+    var options = {
+      new: true
+    }
+
+    var param = {
+      _id: message._id,
+      update,options
+    }
+
+    var variables = {
+      param
+    }
+
+    if(message.sender != user._id){
+      run({
+        variables,
+        fetchPolicy:'no-cache'
+      })
+    }
+
     var [filtered] = messages.filter(
       ({_id}) => _id == message._id
     )
@@ -495,8 +522,43 @@ function Messages({user,state}){
     }
   }
 
+  function onUpdate(val){
+    var test = Array.isArray(
+      messages
+    )
+
+    if(test){
+      var [filter] = messages.filter(
+        ({_id}) => _id == val
+      )
+
+      if(filter){
+        var newMessages = messages.map(
+          (message) => message
+        )
+
+        var index = newMessages.indexOf(
+          filter
+        )
+
+        newMessages[index] = {
+          ...filter,
+          read:true
+        }
+
+        setMessages((current) => {
+          return newMessages
+        })
+      }
+    }
+  }
+
   socketIo.off('message').on(
     'message',onMessage
+  )
+
+  socketIo.off('messsageUpdate').on(
+    'messageUpdate',onUpdate
   )
 
 

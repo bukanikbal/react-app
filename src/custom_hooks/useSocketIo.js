@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import {io} from 'socket.io-client'
 
-function useSocketIo(sA,_id){
+function useSocketIo(sA,ids){
   var [autoConnect] = useState(false)
 
   var [cfg] = useState({autoConnect})
@@ -21,12 +21,12 @@ function useSocketIo(sA,_id){
   function join(){
   	socket.emit(
   	  'join',
-  	  _id
+  	  ids
   	)
   }
 
   socket.on('connect',() => {
-  	if(_id) join()
+  	if(ids) join()
   })
 
   useEffect(() => clientInit(),[])

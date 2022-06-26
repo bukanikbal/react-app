@@ -48,14 +48,16 @@ var MessagesQuery = gql`
       }
       uniqueId
       send
+      read
     }
   }
 `
 
 var newQuery = gql`
-  mutation newMessage($param: newMessage){
+  mutation newMessage($param: NewMessage){
     new(param: $param){
       _id
+      read
       sender
       receiver
       content {
@@ -64,6 +66,22 @@ var newQuery = gql`
       }
       uniqueId
 
+    }
+  }
+`
+
+var updateQuery = gql`
+  mutation readUpdate($param: MessageStatus){
+    read(param: $param){
+      _id
+      read
+      sender
+      receiver
+      uniqueId
+      content {
+        type
+        value
+      }
     }
   }
 `
@@ -81,4 +99,11 @@ var searchQuery = gql`
 `
 
 
-export {AuthQuery,RecentlyQuery,MessagesQuery,newQuery,searchQuery}
+export {
+  AuthQuery,
+  RecentlyQuery,
+  MessagesQuery,
+  newQuery,
+  searchQuery,
+  updateQuery
+}
